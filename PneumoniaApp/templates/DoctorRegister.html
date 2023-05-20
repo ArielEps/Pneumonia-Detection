@@ -1,0 +1,24 @@
+{% extends 'Authlayout.html' %} 
+
+{% block content %}
+<p>Doctor Sign Up</p>
+
+<form class="doctorForm" action="" method="POST">
+    <label for="username">Full Name</label>
+    <input type="text" name="username" id="username" placeholder="FirstName LastName">
+
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" placeholder="example@gmail.com">
+
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" placeholder="******">
+
+    <label for="license">Doctor License Number</label>
+    <input type="text" name="license" id="license" placeholder="123456">
+
+
+    <button>Sign Up</button>
+    <a href="{{url_for('Authentication.Login')}}">Already have an account? Sign in here</a>
+</form>
+
+{% endblock content %}

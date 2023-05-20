@@ -146,7 +146,7 @@ a{
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    background-color: white;
     border-radius: 50px;
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
 
@@ -159,6 +159,13 @@ a{
 }
 
 p{
+    position: absolute;
+    margin-bottom: 20em;
     font-size: xx-large;
     color: #006eff;
+}
+.doctorForm{
+    height: 140%;
+
+    overflow: unset;
 }
