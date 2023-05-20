@@ -6,3 +6,8 @@ Authentication = Blueprint('Authentication', __name__)
 @Authentication.route("/")
 def AuthScreen():
     return render_template('Login.html')
+
+
+@Authentication.route("/ChooseAuth")
+def ChooseAuth():
+    return render_template('ChooseAuth.html')
