@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    background-image: url("Authlayout/background.avif");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    font-family: 'Inconsolata', monospace;
+    font-family: 'Montserrat', sans-serif;    
+}
+
+.mainContent{
+    background: linear-gradient(to right, #ffffff 0%, #ffffff 50%, #6495ED 50%, #6495ED 100%);
+    width: 85%; 
+    height: 75%; 
+
+    display: flex;
+    flex-direction: row;
+
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+
+    overflow: hidden;
+
+}
+
+.left-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(to top left, rgb(0, 0, 255), rgb(0, 128, 255), rgb(0, 191, 255), rgb(135, 206, 250));    width: 85%; 
+    border-bottom-right-radius: 10%;
+}
+
+.right-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 85%; 
+    background: linear-gradient(to top left, #ffffff 0%, #f9f9f9 50%, #f2f2f2 100%);
+    border-radius: 0 0 50px 0;
+
+    border-top-left-radius: 10%;
+}
+
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+    background-color: white;
+
+    border-radius: 40px;
+
+    padding-left: 5rem;
+    padding-right: 5rem;
+
+    overflow: hidden;
+}
+
+label{
+    color: rgb(90, 90, 241);
+    font-weight: bold;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+input{
+    height: 3em;
+    width: 25em;
+    padding-left: 6px;
+
+    border-style: none;
+    border-bottom-style: solid;
+}
+
+select{
+    height: 3em;
+    width: 25em;
+    padding-left: 6px;
+
+    border-style: none;
+    border-bottom-style: solid;
+}
+
+button{
+    height: 3em;
+    width: 25em;
+    padding-left: 6px;
+    margin-top: 2em;
+
+    background-color: #6495ED;
+    transition-duration: 0.4s;
+    border-style: none;
+
+    height: 10% ;
+    width: 20%;
+
+    border-radius: 10px;
+    margin-left: 10em;
+}
+
+.button:hover {
+    background-color: #08aaf5;
+    color: #08aaf5;
+  }
+
+
+a{
+    text-decoration: none;
+    margin-top: 2em;
+    padding-bottom: 1em;
+    margin-left:1em;
+}
+.cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    height: 40%;
+    width: 40%;
+}
+
+.LogoShape{
+    position: absolute;
+    margin-top: 65rem;
+}

@@ -1,0 +1,24 @@
+{% extends 'Authlayout.html' %} 
+
+{% block content %}
+
+
+    <form action="" method="POST">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="example@gmail.com">
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="123456">
+
+        <label for="select">Auth</label>
+        <select name="select" id="select">
+            <option value="Manager">Manager</option>
+            <option value="Doctor">Doctor</option>
+            <option value="Patient">Patient</option>
+        </select>
+
+        <button>Login</button>
+        <a href="">Don't have an Account? Sign up here</a>
+    </form>
+
+{% endblock content %}

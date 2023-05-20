@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template,  redirect, url_for
 
 Authentication = Blueprint('Authentication', __name__)
 
+
 @Authentication.route("/")
-def Hi():
-    return "hello"
+def AuthScreen():
+    return render_template('Login.html')
