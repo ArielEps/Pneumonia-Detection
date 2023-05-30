@@ -7,6 +7,9 @@
     <label for="username">Full Name</label>
     <input type="text" name="username" id="username" placeholder="FirstName LastName">
 
+    <label for="id">id</label>
+    <input type="id" name="id" id="id" placeholder="315423587">
+
     <label for="email">Email</label>
     <input type="email" name="email" id="email" placeholder="example@gmail.com">
 
@@ -18,4 +21,7 @@
     <a href="{{url_for('Authentication.Login')}}">Already have an account? Sign in here</a>
 </form>
 
+<section>
+    {{message}}
+</section>
 {% endblock content %}

@@ -4,6 +4,10 @@
 
 <p>Login</p>
     <form action="" method="POST">
+        <label for="id">id</label>
+        <input type="id" name="id" id="id" placeholder="315423587">
+
+
         <label for="email">Email</label>
         <input type="email" name="email" id="email" placeholder="example@gmail.com">
 
@@ -21,4 +25,7 @@
         <a href="{{url_for('Authentication.ChooseAuth')}}">Don't have an Account? Sign up here</a>
     </form>
 
+    <section>
+        {{message}}
+    </section>
 {% endblock content %}
