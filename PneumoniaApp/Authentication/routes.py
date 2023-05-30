@@ -76,8 +76,9 @@ def DoctorRegister():
             db.session.commit()
             return  redirect(url_for('Authentication.Login'))
     
-    message = "User already exist"
-    return render_template('DoctorRegister.html', message=message)
+        message = "User already exist"
+        return render_template('DoctorRegister.html', message=message)
+    return render_template('DoctorRegister.html')
 
 
 @Authentication.route("/PatientRegister",  methods=['POST','GET'])
@@ -96,8 +97,9 @@ def PatientRegister():
             db.session.commit()
             return  redirect(url_for('Authentication.Login'))
     
-    message = "User already exist"
-    return render_template('PatientRegister.html', message=message)
+        message = "User already exist"
+        return render_template('PatientRegister.html', message=message)
+    return render_template('PatientRegister.html')
 
 @Authentication.route("/hello")
 def hello():
