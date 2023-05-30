@@ -1,5 +1,6 @@
 from PneumoniaApp.Authentication.models import *
 from PneumoniaApp.Authentication.routes import bcrypt
+from PneumoniaApp.Authentication.validate import *
 ############################################################################################# pages tests ############################################################################################
 def test_home(client):
     response = client.get("/")
@@ -107,3 +108,12 @@ def test_manager_login_failure(client):
         'select': 'Manager'
     })
     assert b"incorrect field, please log again!" in response.data
+
+# test validation functions: 
+def test_check_if_patient_exist(client):
+    assert check_if_patient_exist('patient1', 'newpatient1@example.com') is True
+    assert check_if_patient_exist('nonexistentpatient', 'nonexistent@example.com') is False
+
+def test_check_if_doctor_exist(client):
+    assert check_if_doctor_exist('test_doctor_id', 'test_doctor@example.com', 'test_license') is True
+    assert check_if_doctor_exist('nonexistentdoctor', 'nonexistent@example.com', 'nonexistentlicense') is False
