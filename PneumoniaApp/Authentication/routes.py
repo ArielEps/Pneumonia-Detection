@@ -22,7 +22,7 @@ def Login():
             
             if manager and bcrypt.check_password_hash(manager.password, password):
                 login_user(manager, remember=False)
-                return  redirect(url_for('Authentication.hello'))
+                return  redirect(url_for('Authentication.ManagerHome'))
             else:
                 message = "incorrect field, please log again!" 
                 return render_template('Login.html', message = message)
@@ -33,7 +33,7 @@ def Login():
 
             if patient and bcrypt.check_password_hash(patient.password, password):
                 login_user(patient, remember=False)
-                return  redirect(url_for('Authentication.hello'))
+                return  redirect(url_for('Authentication.patientHome'))
             else:
                 message = "incorrect field, please log again!" 
                 return render_template('Login.html', message = message)
@@ -44,7 +44,7 @@ def Login():
             if doctor and bcrypt.check_password_hash(doctor.password, password):
                 if doctor.is_approved:
                     login_user(doctor, remember=False)
-                    return  redirect(url_for('Authentication.hello'))
+                    return  redirect(url_for('Authentication.doctorHome'))
                 else:
                     message = "Waiting for manager approval" 
                     return render_template('Login.html', message = message)
@@ -101,6 +101,22 @@ def PatientRegister():
         return render_template('PatientRegister.html', message=message)
     return render_template('PatientRegister.html')
 
-@Authentication.route("/hello")
-def hello():
-    return render_template('hello.html')
+@Authentication.route("/managerHome")
+@login_required
+def ManagerHome():
+    return render_template('ManagerHome.html')
+
+@Authentication.route("/patientHome")
+@login_required
+def patientHome():
+    return render_template('ManagerHome.html')
+
+@Authentication.route("/doctorHome")
+@login_required
+def doctorHome():
+    return render_template('ManagerHome.html')
+
+@Authentication.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('Authentication.Login'))
