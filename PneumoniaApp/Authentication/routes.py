@@ -109,12 +109,12 @@ def ManagerHome():
 @Authentication.route("/patientHome")
 @login_required
 def patientHome():
-    return render_template('ManagerHome.html')
+    return render_template('patientHome.html')
 
 @Authentication.route("/doctorHome")
 @login_required
 def doctorHome():
-    return render_template('ManagerHome.html')
+    return render_template('doctorHome.html')
 
 @Authentication.route("/logout")
 def logout():
