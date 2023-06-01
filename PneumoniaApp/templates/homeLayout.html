@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Mainlayout.css') }}"/>
+</head>
+<body>
+    <img id="logo" src="static/Authlayout/WebLogoRemove.png" alt="Logo">
+    <div id="container">
+        <nav>
+            {% block content %}
+            {% endblock %}
+        </nav>
+        <section>
+            <div id="userNav">
+                {% block homepage %}
+                {% endblock %}
+                <a href="{{url_for('Authentication.logout')}}">Logout</a>
+            </div>
+            <div id="content">
+                {% block desc %}
+                {% endblock %}
+            </div>
+        </section>
+    </div>
+</body>
+</html>

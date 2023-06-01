@@ -1,0 +1,114 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    background-image: url("UserLayout/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    font-family: 'Inconsolata', monospace;
+    font-family: 'Montserrat', sans-serif;    
+}
+
+#container{
+    display: flex;
+    flex-direction: row;
+
+
+    margin-bottom: 17%;
+
+}
+
+#container nav{
+    display: flex;
+    flex-direction: column;
+
+    padding-right: 5em;
+
+    margin-right: 5%;
+}
+
+#container nav a{
+    font-size: x-large;
+    text-decoration: none;
+    background-color: rgb(241, 172, 42);
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+
+    color: white;
+    
+    border-bottom-style: solid;
+    border-bottom-color:  rgb(245, 186, 76);
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    border-bottom-width: 0.5px;
+    
+    padding-left:2em;
+    padding-right: 2em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+
+#container nav a:hover{
+    background-color: rgb(240, 182, 75);
+    width: 100%;
+}
+
+#container section{
+    background-color: white;
+
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+
+    display: flex;
+    flex-direction: column;
+}
+
+#userNav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    border-bottom-style: solid;
+    border-bottom-width: 0.5px;
+
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+#userNav a{
+    font-size: x-large;
+    text-decoration: none;
+    margin-top: 1em;
+    margin-bottom: 0.2em;
+
+    color: black;
+    font-weight: 600;
+
+}
+
+#userNav a:hover{
+
+    color: rgb(56, 28, 28);
+}
+
+#logo{
+    margin-bottom: 3%;
+}
+
+p{
+    margin-left: 0.2em;
+    font-size: larger;
+    padding-left: 6em;
+    padding-right: 6em;
+}
+
+#content img{
+    width: 20%;
+    height: 30%;
+    margin-top: 3em;
+    margin-left: 10%;
+}

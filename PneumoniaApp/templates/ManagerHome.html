@@ -1,0 +1,22 @@
+{% extends 'homeLayout.html' %} 
+
+
+{% block content %}
+    <a href="">Approve doctors</a>
+    <a href="">Reports</a>
+    <a href="">Waiting for diagnose</a>
+    <a href="">Account settings</a>
+{% endblock content %}
+
+
+{% block homepage %}
+    <a href="{{url_for('Authentication.ManagerHome')}}">Home Page</a>
+{% endblock %}
+
+{% block desc %}
+    <p> <b>- Approve doctors: </b> Allowed you to check and approve new doctors who wants to join the website </p>
+    <p> <b>- Reports: </b> Allowed you to export site reports and statistics(diagnoses reports, users login) </p>
+    <p> <b>- Waiting for diagnose: </b> Allowed to check which patients still waiting for diagnose </p>
+    <p> <b>- Account settings: </b> Allowed to change password </p>
+    <img src="static/UserLayout/stethoscopes.webp" alt="statoscope">
+{% endblock desc %}
