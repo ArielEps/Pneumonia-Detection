@@ -112,3 +112,48 @@ p{
     margin-top: 3em;
     margin-left: 10%;
 }
+
+
+#passwordForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding-left: 10em;
+    padding-right: 10em;
+    padding-bottom: 2em;
+}
+
+#passwordForm label{
+    font-size: larger;
+    color: rgb(99, 99, 235);
+
+    margin-top: 2em;
+
+}
+
+#passwordForm input{
+    font-size: larger;
+    margin-top: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    width: 70%; 
+}
+
+#passwordForm button{
+    font-size: larger;
+    margin-top: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+
+    width: 70%; 
+    
+    border-style: none;
+    border-radius: 20px;
+    background-color: rgb(191, 191, 247);
+}
+
+#passwordForm button:hover{
+    background-color: rgb(137, 137, 247);
+}

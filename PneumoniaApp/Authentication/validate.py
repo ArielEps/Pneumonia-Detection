@@ -16,3 +16,6 @@ def check_if_doctor_exist(id, email, doctor_license):
     if doctor_email or doctor_id or doctor_license:
         return True
     return False
+
+def check_if_password(password, confPass):
+    return password == confPass

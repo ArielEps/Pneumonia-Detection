@@ -120,3 +120,55 @@ def doctorHome():
 def logout():
     logout_user()
     return redirect(url_for('Authentication.Login'))
+
+
+@Authentication.route("/ManagerChangePassword",  methods=['POST','GET'])
+@login_required
+def ManagerChangePassword():
+    if request.method == 'POST':
+        password = request.form.get('password')
+        confPass = request.form.get('passwordConf')
+        if check_if_password(password, confPass):
+            password = bcrypt.generate_password_hash(password).decode('utf-8')
+            manager = Manager.query.filter_by(id = current_user.id).first()
+            manager.password = password
+            db.session.commit()
+            return redirect(url_for('Authentication.ManagerHome'))
+        else:
+            return render_template('ManagerchangePassword.html', message="password not match!")
+            
+    return render_template('ManagerchangePassword.html')
+
+@Authentication.route("/PatientChangePassword",  methods=['POST','GET'])
+@login_required
+def PatientChangePassword():
+    if request.method == 'POST':
+        password = request.form.get('password')
+        confPass = request.form.get('passwordConf')
+        if check_if_password(password, confPass):
+            password = bcrypt.generate_password_hash(password).decode('utf-8')
+            patient = Patient.query.filter_by(id = current_user.id).first()
+            patient.password = password
+            db.session.commit()
+            return redirect(url_for('Authentication.patientHome'))
+        else:
+            return render_template('PatientchangePassword.html', message="password not match!")
+        
+    return render_template('PatientchangePassword.html')
+
+@Authentication.route("/DoctorChangePassword",  methods=['POST','GET'])
+@login_required
+def DoctorChangePassword():
+    if request.method == 'POST':
+        password = request.form.get('password')
+        confPass = request.form.get('passwordConf')
+        if check_if_password(password, confPass):
+            password = bcrypt.generate_password_hash(password).decode('utf-8')
+            doctor = Doctor.query.filter_by(id = current_user.id).first()
+            doctor.password = password
+            db.session.commit()
+            return redirect(url_for('Authentication.doctorHome'))
+        else:
+            return render_template('DoctorchangePassword.html', message="password not match!")
+    return render_template('DoctorchangePassword.html')
+    
