@@ -157,3 +157,28 @@ p{
 #passwordForm button:hover{
     background-color: rgb(137, 137, 247);
 }
+
+.doctor{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    width: 100%;
+
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+    margin-top: 2em;
+    padding-left: 3em;
+    padding-right: 3em;
+}
+
+.doctor label{
+    margin-left: 3em;
+    margin-bottom: 2em;
+}
+
+.doctor #check{
+    margin-bottom: 1em;
+    width: 1em;
+    
+}

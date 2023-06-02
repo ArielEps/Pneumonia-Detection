@@ -37,7 +37,9 @@ def create_app(database_uri="sqlite:///site.db"):
             return manager
 
     from PneumoniaApp.Authentication.routes import Authentication
+    from PneumoniaApp.Manager.routes import manager
     app.register_blueprint(Authentication)
+    app.register_blueprint(manager)
     
     return app
 

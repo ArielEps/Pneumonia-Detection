@@ -15,14 +15,16 @@
 
 {% block desc %}
     <form action="" method="POST" id="passwordForm">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
 
-        <label for="passwordConf">Password confirm</label>
-        <input type="password" name="passwordConf" id="passwordConf">
+        {% for doctor in doctors%}
+            <div class="doctor">
+                <input id="check" type="checkbox" name="doctors" id="" value="{{ doctor.id }}"">
+                <label for="">Name:{{doctor.username}}</label>
+                <label for="">Id:{{doctor.user_id}}</label>
+                <label for="">License:{{doctor.doctor_license}}</label>
+            </div>
+        {% endfor %}
 
-        <button>Submit</button>
-
-        <label>{{message}}</label>
+        <button>Approve</button>
     </form>
 {% endblock desc %}
