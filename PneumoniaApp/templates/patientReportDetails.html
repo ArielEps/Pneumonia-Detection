@@ -15,16 +15,13 @@
 {% endblock %}
 
 {% block desc %}
-    <form action="" method="POST" id="passwordForm">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
 
-        <label for="passwordConf">Password confirm</label>
-        <input type="password" name="passwordConf" id="passwordConf">
-
-        <button>Submit</button>
-
-        <label>{{message}}</label>
-    </form>
+    <div id="passwordForm">
+        <h1>Report Number: {{report.id}}</h1>
+        <img src="{{ url_for('static', filename='Images/' + report.image) }}" alt="Report Image">
+        <label for="">Satrt Date:{{report.start_date}}</label>
+        <label for="">End Date:{{report.end_date }}</label>
+        <label for="">Doctor:{{doctor.username }}</label>
+        <label for="">Answer: {{report.is_sick}}</label>
+    </div>
 {% endblock desc %}
-

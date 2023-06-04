@@ -15,16 +15,17 @@
 {% endblock %}
 
 {% block desc %}
-    <form action="" method="POST" id="passwordForm">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
+    <form action="" method="POST" id="passwordForm" enctype="multipart/form-data">
+        <label for="file">Upload Image</label>
+        <input type="file" name="file" id="file">
 
-        <label for="passwordConf">Password confirm</label>
-        <input type="password" name="passwordConf" id="passwordConf">
+        <label for="doctor">Select doctor</label>
+        <select name="doctor" id="doctor">
+            {% for doc in doctor %}
+                <option value="{{doc.id}}">{{doc.username}}</option>
+            {% endfor %}
+        </select>
 
         <button>Submit</button>
-
-        <label>{{message}}</label>
     </form>
 {% endblock desc %}
-

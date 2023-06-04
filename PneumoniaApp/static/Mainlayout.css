@@ -17,7 +17,6 @@ body {
     display: flex;
     flex-direction: row;
 
-
     margin-bottom: 17%;
 
 }
@@ -29,6 +28,7 @@ body {
     padding-right: 5em;
 
     margin-right: 5%;
+    margin-left: 3em;
 }
 
 #container nav a{
@@ -181,4 +181,31 @@ p{
     margin-bottom: 1em;
     width: 1em;
     
+}
+
+select{
+    margin-top: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-size: larger;
+}
+
+#passwordForm a{
+    font-size: larger;
+    color: rgb(53, 53, 238);
+
+    margin-top: 2em;
+}
+
+
+#passwordForm img{
+    margin-right: 9em;
+    height: 10%;
+    width: 20%;
+}
+
+section{
+    margin-right: 3em;
 }

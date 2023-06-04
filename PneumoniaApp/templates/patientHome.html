@@ -2,10 +2,10 @@
 
 
 {% block content %}
-    <a href="">Create diagnose report</a>
+    <a href="{{url_for('patient.PatientDiagnose')}}">Create diagnose report</a>
     <a href="">Scedule an appointment</a>
     <a href="">Diagnose report</a>
-    <a href="">Diagnose history</a>
+    <a href="{{url_for('patient.DiagnoseHistory')}}">Diagnose history</a>
     <a href="{{url_for('Authentication.PatientChangePassword')}}">Account settings</a>
 {% endblock content %}
 

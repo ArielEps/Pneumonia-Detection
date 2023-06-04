@@ -15,16 +15,13 @@
 {% endblock %}
 
 {% block desc %}
-    <form action="" method="POST" id="passwordForm">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
 
-        <label for="passwordConf">Password confirm</label>
-        <input type="password" name="passwordConf" id="passwordConf">
-
-        <button>Submit</button>
-
-        <label>{{message}}</label>
-    </form>
+    <div id="passwordForm">
+        {% for report in reports %}
+            <div class="doctor">
+                <a href="{{ url_for('patient.report_details', report_id=report.id) }}">Report_number:{{ report.id }}</a>
+                <label for="">Date:{{report.start_date}}</label>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock desc %}
-

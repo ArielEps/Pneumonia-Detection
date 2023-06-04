@@ -38,8 +38,10 @@ def create_app(database_uri="sqlite:///site.db"):
 
     from PneumoniaApp.Authentication.routes import Authentication
     from PneumoniaApp.Manager.routes import manager
+    from PneumoniaApp.Patient.routes import patient
     app.register_blueprint(Authentication)
     app.register_blueprint(manager)
+    app.register_blueprint(patient)
     
     return app
 
