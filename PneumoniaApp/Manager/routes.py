@@ -57,3 +57,8 @@ def downloadReports():
             writer.writerow([report.id, report.start_date, user.user_id, user.username, doctor.user_id, doctor.username])
 
     return send_file(absolute_path, as_attachment=True)
+
+@manager.route("/ManagerReports")
+@login_required
+def managerReports():
+    return render_template("ManagerReports.html")
