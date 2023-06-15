@@ -2,16 +2,14 @@
 
 
 {% block content %}
-    <a href="{{url_for('patient.PatientDiagnose')}}">Create diagnose report</a>
-    <a href="">Scedule an appointment</a>
-    <a href="{{url_for('patient.DiagnoseReport')}}">Diagnose report</a>
-    <a href="{{url_for('patient.DiagnoseHistory')}}">Diagnose history</a>
-    <a href="{{url_for('Authentication.PatientChangePassword')}}">Account settings</a>
+    <a href="{{url_for('manager.approveDoctors')}}">Approve doctors</a>
+    <a href="">Reports</a>
+    <a href="{{url_for('manager.waitingForDiagnose')}}">Waiting for diagnose</a>
+    <a href="{{url_for('Authentication.ManagerChangePassword')}}">Account settings</a>
 {% endblock content %}
 
-
 {% block homepage %}
-    <a href="{{url_for('Authentication.patientHome')}}">Home Page</a>
+    <a href="{{url_for('Authentication.ManagerHome')}}">Home Page</a>
 {% endblock %}
 
 {% block desc %}

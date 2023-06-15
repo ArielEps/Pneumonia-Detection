@@ -4,11 +4,10 @@
 {% block content %}
     <a href="{{url_for('patient.PatientDiagnose')}}">Create diagnose report</a>
     <a href="">Scedule an appointment</a>
-    <a href="">Diagnose report</a>
+    <a href="{{url_for('patient.DiagnoseReport')}}">Diagnose report</a>
     <a href="{{url_for('patient.DiagnoseHistory')}}">Diagnose history</a>
     <a href="{{url_for('Authentication.PatientChangePassword')}}">Account settings</a>
 {% endblock content %}
-
 
 {% block homepage %}
     <a href="{{url_for('Authentication.patientHome')}}">Home Page</a>

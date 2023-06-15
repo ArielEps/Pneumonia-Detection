@@ -37,7 +37,13 @@ def PatientDiagnose():
 @patient.route("/DiagnoseHistory")
 @login_required
 def DiagnoseHistory():
-    reports = Report.query.filter_by(patient_id=current_user.id)
+    reports = Report.query.filter_by(patient_id=current_user.id, is_answer=True)
+    return render_template("PatientDiagnoseHistory.html", reports=reports)
+
+@patient.route("/DiagnoseReport")
+@login_required
+def DiagnoseReport():
+    reports = Report.query.filter_by(patient_id=current_user.id, is_answer=False)
     return render_template("PatientDiagnoseHistory.html", reports=reports)
 
 @patient.route("/report-details/<int:report_id>")

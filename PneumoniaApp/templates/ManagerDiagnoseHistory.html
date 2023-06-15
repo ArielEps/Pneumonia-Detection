@@ -8,23 +8,20 @@
     <a href="{{url_for('Authentication.ManagerChangePassword')}}">Account settings</a>
 {% endblock content %}
 
-
 {% block homepage %}
     <a href="{{url_for('Authentication.ManagerHome')}}">Home Page</a>
 {% endblock %}
 
 {% block desc %}
-    <form action="" method="POST" id="passwordForm">
 
-        {% for doctor in doctors%}
+    <div id="passwordForm">
+        {% for report in reports %}
             <div class="doctor">
-                <input id="check" type="checkbox" name="doctors" id="" value="{{ doctor.id }}"">
-                <label for="">Name:{{doctor.username}}</label>
-                <label for="">Id:{{doctor.user_id}}</label>
-                <label for="">License:{{doctor.doctor_license}}</label>
+                <a href="{{ url_for('manager.report_details', report_id=report.id) }}">Report_number:{{ report.id }}</a>
+                <label for="">Date:{{report.start_date}}</label>
             </div>
         {% endfor %}
+    </div>
 
-        <button>Approve</button>
-    </form>
+    <a href="{{url_for('manager.downloadReports')}}" id="downLink">Download Reports</a>
 {% endblock desc %}

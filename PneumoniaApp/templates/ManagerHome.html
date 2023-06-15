@@ -4,7 +4,7 @@
 {% block content %}
     <a href="{{url_for('manager.approveDoctors')}}">Approve doctors</a>
     <a href="">Reports</a>
-    <a href="">Waiting for diagnose</a>
+    <a href="{{url_for('manager.waitingForDiagnose')}}">Waiting for diagnose</a>
     <a href="{{url_for('Authentication.ManagerChangePassword')}}">Account settings</a>
 {% endblock content %}
 
