@@ -44,7 +44,7 @@ def report_details(report_id):
 @login_required
 def downloadReports():
     reports = Report.query.filter_by(is_answer=False).all()
-    filename = "reports.csv"
+    filename = "waitForReports.csv"
     absolute_path = os.path.join(os.getcwd(), filename)
 
     with open(absolute_path, "w", newline="") as file:
