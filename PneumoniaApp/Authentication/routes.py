@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template,  redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
-from PneumoniaApp.Authentication.models import Patient, Doctor, Manager
+from PneumoniaApp.Authentication.models import Patient, Doctor, Manager, UserActivity
 from PneumoniaApp import db
 from PneumoniaApp.Authentication.validate import *
 from flask_bcrypt import Bcrypt
+from datetime import datetime
 
 Authentication = Blueprint('Authentication', __name__)
 bcrypt = Bcrypt()
@@ -33,6 +34,9 @@ def Login():
 
             if patient and bcrypt.check_password_hash(patient.password, password):
                 login_user(patient, remember=False)
+                log_report = UserActivity(user_id=patient.id, userid=patient.user_id, username=patient.username, login_datetime=datetime.utcnow())
+                db.session.add(log_report)
+                db.session.commit()
                 return  redirect(url_for('Authentication.patientHome'))
             else:
                 message = "incorrect field, please log again!" 
@@ -44,6 +48,9 @@ def Login():
             if doctor and bcrypt.check_password_hash(doctor.password, password):
                 if doctor.is_approved:
                     login_user(doctor, remember=False)
+                    log_report = UserActivity(user_id=doctor.id, userid=doctor.user_id, username=doctor.username, login_datetime=datetime.utcnow())
+                    db.session.add(log_report)
+                    db.session.commit()
                     return  redirect(url_for('Authentication.doctorHome'))
                 else:
                     message = "Waiting for manager approval" 
@@ -116,8 +123,14 @@ def patientHome():
 def doctorHome():
     return render_template('doctorHome.html')
 
-@Authentication.route("/logout")
+@Authentication.route("/logout", methods=['GET'])
+@login_required
 def logout():
+    user = current_user
+    user_activity = UserActivity.query.filter_by(user_id=user.id, logout_datetime=None).first()
+    if user_activity:
+        user_activity.logout_datetime = datetime.utcnow()
+        db.session.commit()
     logout_user()
     return redirect(url_for('Authentication.Login'))
 

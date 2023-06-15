@@ -15,18 +15,18 @@
 {% block desc %}
 
     <div id="passwordForm">
-        <a href="{{url_for('manager.downloadReports')}}" id="report">
-            <img src="static/UserLayout/login.png" alt="statoscope">
+        <a href="{{url_for('manager.downloadLoginReports')}}" id="report">
+            <img src="static/UserLayout/login.png" alt="login icon">
             <p>Login report</p>
         </a>
         
         <a href="{{url_for('manager.downloadReports')}}" id="report">
-            <img src="static/UserLayout/calender.png" alt="statoscope">
+            <img src="static/UserLayout/calender.png" alt="calender icon">
             <p>Appointments Report</p>
         </a>
         
-        <a href="{{url_for('manager.downloadReports')}}" id="report">
-            <img src="static/UserLayout/diagnose.png" alt="statoscope">
+        <a href="{{url_for('manager.downloadDiagnose')}}" id="report">
+            <img src="static/UserLayout/diagnose.png" alt="diagnose icon">
             <p>Diagnose Report</p>
         </a>
     </div>

@@ -37,3 +37,16 @@ class Manager(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.user_id}','{self.username}', '{self.email}')"
+
+
+class UserActivity(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('patient.id') or db.ForeignKey('doctor.id'), nullable=False)
+    userid = db.Column(db.String(20), unique=False, nullable=False)
+    username = db.Column(db.String(20), unique=False, nullable=False)
+    login_datetime = db.Column(db.DateTime, nullable=False)
+    logout_datetime = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return f"UserActivity(user_id='{self.user_id}', login_datetime='{self.login_datetime}', logout_datetime='{self.logout_datetime}')"
+
