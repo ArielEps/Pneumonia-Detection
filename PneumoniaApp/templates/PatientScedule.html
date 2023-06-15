@@ -9,18 +9,28 @@
     <a href="{{url_for('Authentication.PatientChangePassword')}}">Account settings</a>
 {% endblock content %}
 
+
 {% block homepage %}
     <a href="{{url_for('Authentication.patientHome')}}">Home Page</a>
 {% endblock %}
 
 {% block desc %}
+    <form method="POST" action="" id="passwordForm" >
 
-    <div id="passwordForm">
-        {% for report in reports %}
-            <div class="doctor">
-                <a href="{{ url_for('patient.report_details', report_id=report.id) }}">Report_number:{{ report.id }}</a>
-                <label for="">Date:{{report.start_date}}</label>
-            </div>
-        {% endfor %}
-    </div>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+    
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" required>
+
+        <label for="doctor">Select doctor</label>
+        <select name="doctor" id="doctor">
+            {% for doc in doctor %}
+                <option value="{{doc.id}}">{{doc.username}}</option>
+            {% endfor %}
+        </select>
+
+        <button>Submit</button>
+        </form>
+    </form>
 {% endblock desc %}

@@ -1,11 +1,12 @@
 from flask import Blueprint, render_template,  redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
 from PneumoniaApp.Authentication.models import Patient, Doctor, Manager
-from PneumoniaApp.Patient.models import Report
+from PneumoniaApp.Patient.models import Report, Appointment
 from PneumoniaApp import db
 from PneumoniaApp.Authentication.validate import *
 import os
 import secrets
+from datetime import datetime, date
 from werkzeug.utils import secure_filename
 
 patient = Blueprint('patient', __name__)
@@ -55,3 +56,23 @@ def report_details(report_id):
         return render_template("patientReportDetails.html", report=report, doctor=doctor)
     else:
         return render_template("PatientDiagnoseHistory.html", reports=reports)
+
+
+@patient.route("/PatientScedule", methods=['POST', 'GET'])
+@login_required
+def PatientScedule():
+    if request.method == 'POST':
+        date_str = request.form.get('date')
+        time_str = request.form.get('time')
+        doctor_id = int(request.form.get('doctor'))
+        
+        date_obj = datetime.strptime(date_str, '%Y-%m-%d').date()
+        
+        time_obj = datetime.strptime(time_str, '%H:%M').time()
+        
+        appointment = Appointment(date=date_obj, time=time_obj, patient_id=current_user.id, doctor_id=doctor_id)
+        db.session.add(appointment)
+        db.session.commit()
+
+    doctor = Doctor.query.filter_by(is_approved=True).all()
+    return render_template("PatientScedule.html", doctor=doctor)

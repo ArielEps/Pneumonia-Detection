@@ -22,3 +22,13 @@ class Report(db.Model):
 
     def __repr__(self):
         return f"Report('{self.image}', '{self.patient_id}', '{self.doctor_id}')"
+
+
+class Appointment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    date = db.Column(db.Date, nullable=False)
+    time = db.Column(db.Time, nullable=False)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
+    doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'), nullable=False)
+    
