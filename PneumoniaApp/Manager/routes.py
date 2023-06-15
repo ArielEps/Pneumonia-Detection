@@ -96,6 +96,26 @@ def downloadLoginReports():
             writer.writerow([activity.id, user.user_id if user else '', user.username if user else '', activity.login_datetime, activity.logout_datetime])
 
     return send_file(absolute_path, as_attachment=True)
+
+
+@manager.route("/downloadAppointmentReports")
+@login_required
+def downloadAppointmentReports():
+    appointments = Appointment.query.all()
+    filename = "AppointmentsReport.csv"
+    absolute_path = os.path.join(os.getcwd(), filename)
+
+    with open(absolute_path, "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["ID", "Created At", "Date", "Time", "Patient ID", "Patient name", "Doctor ID", "Doctor name"])
+        for appointment in appointments:
+            user = Patient.query.filter_by(id=appointment.patient_id).first()
+            doctor = Doctor.query.filter_by(id=appointment.doctor_id).first()
+            writer.writerow([appointment.id, appointment.created_at, appointment.date, appointment.time, user.user_id, user.username, doctor.user_id, doctor.username])
+
+    return send_file(absolute_path, as_attachment=True)
+
+
 @manager.route("/ManagerReports")
 @login_required
 def managerReports():
