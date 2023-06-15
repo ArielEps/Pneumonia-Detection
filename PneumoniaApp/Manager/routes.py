@@ -30,7 +30,7 @@ def waitingForDiagnose():
     reports = Report.query.filter_by(is_answer=False)
     return render_template("ManagerDiagnoseHistory.html", reports=reports)
 
-@manager.route("/report-details/<int:report_id>")
+@manager.route("/reports-details/<int:report_id>")
 @login_required
 def report_details(report_id):
     report = Report.query.get(report_id)
