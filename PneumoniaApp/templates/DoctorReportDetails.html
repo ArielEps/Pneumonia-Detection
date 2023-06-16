@@ -1,6 +1,5 @@
 {% extends 'homeLayout.html' %} 
 
-
 {% block content %}
     <a href="">Create diagnose report</a>
     <a href="">Image photoshop</a>
@@ -11,17 +10,17 @@
     <a href="{{url_for('Authentication.DoctorChangePassword')}}">Account settings</a>
 {% endblock content %}
 
-
 {% block homepage %}
     <a href="{{url_for('Authentication.doctorHome')}}">Home Page</a>
 {% endblock %}
 
 {% block desc %}
-    <p> <b>- Create diagnose report: </b> Allowed to upload medical report for patient diagnose </p>
-    <p> <b>- Image photoshop: </b> Allowed to make an chest image more clear </p>
-    <p> <b>- Colleague reports: </b> Allow to get help from other doctors </p>
-    <p> <b>- AI help: </b> AI model that help determine pneumonia </p>
-    <p> <b>- Patient history: </b> See all the past diagnoses </p>
-    <p> <b>- Appoitment scedule: </b> Allowed to see all the appointments </p>
-    <p> <b>- Account settings: </b> Allowed to change password </p>
+    <div id="passwordForm">
+        <h1>Report Number: {{report.id}}</h1>
+        <img src="{{ url_for('static', filename='Images/' + report.image) }}" alt="Report Image">
+        <label for="">Satrt Date:{{report.start_date}}</label>
+        <label for="">End Date:{{report.end_date }}</label>
+        <label for="">Doctor:{{doctor.username }}</label>
+        <label for="">Answer: {{report.is_sick}}</label>
+    </div>
 {% endblock desc %}

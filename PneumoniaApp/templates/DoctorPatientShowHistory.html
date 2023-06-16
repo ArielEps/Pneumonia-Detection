@@ -17,11 +17,13 @@
 {% endblock %}
 
 {% block desc %}
-    <p> <b>- Create diagnose report: </b> Allowed to upload medical report for patient diagnose </p>
-    <p> <b>- Image photoshop: </b> Allowed to make an chest image more clear </p>
-    <p> <b>- Colleague reports: </b> Allow to get help from other doctors </p>
-    <p> <b>- AI help: </b> AI model that help determine pneumonia </p>
-    <p> <b>- Patient history: </b> See all the past diagnoses </p>
-    <p> <b>- Appoitment scedule: </b> Allowed to see all the appointments </p>
-    <p> <b>- Account settings: </b> Allowed to change password </p>
+
+    <div id="passwordForm">
+        {% for report in reports %}
+            <div class="doctor">
+                <a href="{{ url_for('doctor.Doctor_report_details', report_id=report.id) }}">Report_number:{{ report.id }}</a>
+                <label for="">Date:{{report.start_date}}</label>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock desc %}

@@ -17,11 +17,12 @@
 {% endblock %}
 
 {% block desc %}
-    <p> <b>- Create diagnose report: </b> Allowed to upload medical report for patient diagnose </p>
-    <p> <b>- Image photoshop: </b> Allowed to make an chest image more clear </p>
-    <p> <b>- Colleague reports: </b> Allow to get help from other doctors </p>
-    <p> <b>- AI help: </b> AI model that help determine pneumonia </p>
-    <p> <b>- Patient history: </b> See all the past diagnoses </p>
-    <p> <b>- Appoitment scedule: </b> Allowed to see all the appointments </p>
-    <p> <b>- Account settings: </b> Allowed to change password </p>
+    <form action="" method="POST" id="passwordForm">
+        <label for="search">Patient id</label>
+        <input type="text" name="search" id="search">
+
+        <button>Submit</button>
+
+        <label>{{message}}</label>
+    </form>
 {% endblock desc %}
