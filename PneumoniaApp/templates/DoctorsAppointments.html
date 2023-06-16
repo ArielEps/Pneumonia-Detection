@@ -1,0 +1,35 @@
+{% extends 'homeLayout.html' %} 
+
+
+{% block content %}
+    <a href="">Create diagnose report</a>
+    <a href="">Image photoshop</a>
+    <a href="">Colleague reports</a>
+    <a href="">AI help</a>
+    <a href="">Patient history</a>
+    <a href="{{url_for('doctor.DoctorsAppointments')}}">Appoitment scedule</a>
+    <a href="{{url_for('Authentication.DoctorChangePassword')}}">Account settings</a>
+{% endblock content %}
+
+
+{% block homepage %}
+    <a href="{{url_for('Authentication.doctorHome')}}">Home Page</a>
+{% endblock %}
+
+{% block desc %}
+    <div action="" method="POST" id="passwordForm">
+        {% for app in appointments %}
+            <div class="doctor">
+                <label>Date: {{app.date}}</label>
+                <label>Time: {{app.time}}</label>
+
+                {% for patient in pat %}
+                    {% if patient.id == app.patient_id %}
+                        <label>Patient id: {{patient.user_id}}</label>
+                        <label>Patient name: {{patient.username}}</label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock desc %}
