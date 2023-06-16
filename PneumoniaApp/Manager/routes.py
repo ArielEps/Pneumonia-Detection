@@ -89,13 +89,17 @@ def downloadLoginReports():
         writer = csv.writer(file)
         writer.writerow(["ID", "User ID", "Username", "Login Date", "Logout Date"])
         for activity in activities:
-            user = None
-            if activity.user_id:
-                user = Patient.query.filter_by(id=activity.user_id).first() or Doctor.query.filter_by(id=activity.user_id).first()
-            
-            writer.writerow([activity.id, user.user_id if user else '', user.username if user else '', activity.login_datetime, activity.logout_datetime])
+            patient = Patient.query.filter_by(username=activity.username).first()
+            doctor = Doctor.query.filter_by(username=activity.username).first()
+            if patient:
+                user = patient
+            elif doctor:
+                user = doctor
+        
+            writer.writerow([activity.id, user.user_id, user.username, activity.login_datetime, activity.logout_datetime])
 
     return send_file(absolute_path, as_attachment=True)
+
 
 
 @manager.route("/downloadAppointmentReports")
