@@ -14,12 +14,16 @@
 {% endblock %}
 
 {% block desc %}
-    <div id="passwordForm">
+    <form action="" id="passwordForm" method="POST">
         <h1>Report Number: {{report.id}}</h1>
         <img src="{{ url_for('static', filename='Images/' + report.image) }}" alt="Report Image">
         <label for="">Satrt Date:{{report.start_date}}</label>
-        <label for="">End Date:{{report.end_date }}</label>
-        <label for="">Doctor:{{doctor.username }}</label>
         <label for="">Answer: {{report.is_sick}}</label>
-    </div>
+        <select name="select" id="select">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+        </select>
+
+        <button>Submit</button>
+    </form>
 {% endblock desc %}

@@ -18,8 +18,7 @@
         <h1>Report Number: {{report.id}}</h1>
         <img src="{{ url_for('static', filename='Images/' + report.image) }}" alt="Report Image">
         <label for="">Satrt Date:{{report.start_date}}</label>
-        <label for="">End Date:{{report.end_date }}</label>
-        <label for="">Doctor:{{doctor.username }}</label>
-        <label for="">Answer: {{report.is_sick}}</label>
+        <label for="">Helping_Doctor:{{doctor.username }}</label>
+        <label for="">Answer: {{report.helping_doctor_answer}}</label>
     </div>
 {% endblock desc %}

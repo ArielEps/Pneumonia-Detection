@@ -1,0 +1,3 @@
+Report ID,Start Date,End Date,Patient ID,Patient Name,Doctor ID,Doctor Name,Helping Doctor ID,Helping Doctor Name,Helping Doctor Answer,AI Help,AI Answer,Is Sick
+1,2023-06-15,2023-07-03,123456789,Donald Trump,987654321,gustavo fring,,,,False,,False
+2,2023-07-03,2023-07-03,123456789,Donald Trump,987654321,gustavo fring,987654321,gustavo fring,True,False,,True

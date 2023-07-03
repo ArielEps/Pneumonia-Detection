@@ -1,5 +1,6 @@
 {% extends 'homeLayout.html' %} 
 
+
 {% block content %}
     <a href="{{url_for('doctor.Doctor_Answer')}}">Create diagnose report</a>
     <a href="{{url_for('doctor.Helping_Doctors')}}">Colleague reports</a>
@@ -9,17 +10,19 @@
     <a href="{{url_for('Authentication.DoctorChangePassword')}}">Account settings</a>
 {% endblock content %}
 
+
 {% block homepage %}
     <a href="{{url_for('Authentication.doctorHome')}}">Home Page</a>
 {% endblock %}
 
 {% block desc %}
+
     <div id="passwordForm">
-        <h1>Report Number: {{report.id}}</h1>
-        <img src="{{ url_for('static', filename='Images/' + report.image) }}" alt="Report Image">
-        <label for="">Satrt Date:{{report.start_date}}</label>
-        <label for="">End Date:{{report.end_date }}</label>
-        <label for="">Doctor:{{doctor.username }}</label>
-        <label for="">Answer: {{report.is_sick}}</label>
+        {% for report in reports %}
+            <div class="doctor">
+                <a href="{{ url_for('doctor.Doctor_answer_details', report_id=report.id) }}">Report_number:{{ report.id }}</a>
+                <label for="">Date:{{report.start_date}}</label>
+            </div>
+        {% endfor %}
     </div>
 {% endblock desc %}

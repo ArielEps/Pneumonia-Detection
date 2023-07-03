@@ -1,0 +1,37 @@
+{% extends 'homeLayout.html' %} 
+
+
+{% block content %}
+    <a href="{{url_for('doctor.Doctor_Answer')}}">Create diagnose report</a>
+    <a href="{{url_for('doctor.Helping_Doctors')}}">Colleague reports</a>
+    <a href="">AI help</a>
+    <a href="{{url_for('doctor.SearchPatientHistory')}}">Patient history</a>
+    <a href="{{url_for('doctor.DoctorsAppointments')}}">Appoitment scedule</a>
+    <a href="{{url_for('Authentication.DoctorChangePassword')}}">Account settings</a>
+{% endblock content %}
+
+
+{% block homepage %}
+    <a href="{{url_for('Authentication.doctorHome')}}">Home Page</a>
+{% endblock %}
+
+{% block desc %}
+
+<form action="" id="passwordForm" method="POST">
+    {% for report in reports %}
+        <div class="doctor">
+            <input type="checkbox" value="{{ report.id }}" name="checkbox" id="checkbox_{{ report.id }}" style="margin-top: 2em; height:2em;">
+            <a href="{{ url_for('doctor.Doctor_answer_details', report_id=report.id) }}">Report_number: {{ report.id }}</a>
+            <label for="">Date: {{ report.start_date }}</label>
+        </div>
+    {% endfor %}
+
+    <select name="select" id="select">
+        {% for doctor in doctors %}
+            <option value="{{ doctor.id }}">{{ doctor.username }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock desc %}

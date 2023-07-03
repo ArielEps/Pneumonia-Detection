@@ -231,3 +231,7 @@ section{
     margin-right: 5.5em;
     color: black;
 }
+
+#checkbox{
+    height: 2em;
+}
