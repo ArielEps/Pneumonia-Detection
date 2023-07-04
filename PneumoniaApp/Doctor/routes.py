@@ -5,9 +5,13 @@ from PneumoniaApp.Patient.models import Report, Appointment
 from PneumoniaApp import db
 from PneumoniaApp.Authentication.validate import *
 import os
+import pickle
+import cv2
+import numpy as np 
 import secrets
 from datetime import datetime, date
-from werkzeug.utils import secure_filename
+import keras
+import tensorflow as tf
 
 doctor = Blueprint('doctor', __name__)
 
@@ -152,4 +156,40 @@ def Doctor_SeeAnswer_details(report_id):
     else:
         reports = Report.query.filter(Report.doctor_id == current_user.id, Report.is_answer == False, Report.helping_doctor_answer != None).all()
         return render_template("DoctorsSeeAnswers.html", reports=reports)
+
+
+@doctor.route("/DoctorAiHelp")
+@login_required
+def DoctorAI():
+    reports = Report.query.filter_by(doctor_id = current_user.id, is_answer=False)
+    return render_template("DoctorAskAI.html", reports = reports)
     
+
+@doctor.route("/Doctor_AI_HELP/<int:report_id>" , methods=['POST', 'GET'])
+@login_required
+def Doctor_AI_HELP(report_id):
+    report = Report.query.get(report_id)
+    if report:
+        path = os.path.join("PneumoniaApp", "static", "Images", report.image)
+        
+        image = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+        image = cv2.resize(image, (150, 150))
+        image = np.array(image) / 255
+        image = image.reshape(-1, 150, 150, 1)
+        
+        model_filename = f"model.h5"
+        model = tf.keras.models.load_model(model_filename)
+    
+        predictions = model.predict(image)
+        predicted_classes = (predictions > 0.5).astype(int)
+        predicted_classes = predicted_classes.reshape(1, -1)[0]
+        result = 'SICK' if predicted_classes[0] == 0 else 'NOT SICK'
+
+        report.ai_help = True
+        report.ai_answer = True if result == 'SICK' else False
+
+        db.session.commit()
+        return render_template("DoctorAIAnswer.html", result=result, report=report)
+    else:
+        reports = Report.query.filter_by(doctor_id = current_user.id, is_answer=False)
+        return render_template("DoctorAskAI.html", reports = reports)

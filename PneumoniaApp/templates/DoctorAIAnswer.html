@@ -1,0 +1,23 @@
+{% extends 'homeLayout.html' %} 
+
+{% block content %}
+    <a href="{{url_for('doctor.Doctor_Answer')}}">Create diagnose report</a>
+    <a href="{{url_for('doctor.Helping_Doctors')}}">Colleague reports</a>
+    <a href="{{url_for('doctor.DoctorAI')}}">AI help</a>
+    <a href="{{url_for('doctor.SearchPatientHistory')}}">Patient history</a>
+    <a href="{{url_for('doctor.DoctorsAppointments')}}">Appoitment scedule</a>
+    <a href="{{url_for('Authentication.DoctorChangePassword')}}">Account settings</a>
+{% endblock content %}
+
+{% block homepage %}
+    <a href="{{url_for('Authentication.doctorHome')}}">Home Page</a>
+{% endblock %}
+
+{% block desc %}
+    <div action="" id="passwordForm" method="POST">
+        <h1>Report Number: {{report.id}}</h1>
+        <img src="{{ url_for('static', filename='Images/' + report.image) }}" alt="Report Image">
+        <label for="">Satrt Date:{{report.start_date}}</label>
+        <label for="">Answer: {{result}}</label>   
+    </div>
+{% endblock desc %}
