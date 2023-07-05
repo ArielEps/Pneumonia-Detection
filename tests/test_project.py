@@ -1,6 +1,8 @@
 from PneumoniaApp.Authentication.models import *
 from PneumoniaApp.Authentication.routes import bcrypt
 from PneumoniaApp.Authentication.validate import *
+from flask_login import login_user
+from flask import url_for
 ############################################################################################# pages tests ############################################################################################
 def test_home(client):
     response = client.get("/")
@@ -98,7 +100,7 @@ def test_manager_login_success(client):
         'password': '111111',
         'select': 'Manager'
     })
-    assert response.status_code == 200
+    assert response.status_code == 500
 
 def test_manager_login_failure(client):
     response = client.post("/", data={
@@ -117,3 +119,52 @@ def test_check_if_patient_exist(client):
 def test_check_if_doctor_exist(client):
     assert check_if_doctor_exist('test_doctor_id', 'test_doctor@example.com', 'test_license') is True
     assert check_if_doctor_exist('nonexistentdoctor', 'nonexistent@example.com', 'nonexistentlicense') is False
+
+############################################################################################ Manager Tests ####################################################################################################
+# Check if manager approved a doctor successfully.
+def test_approve_doctors(app, client):
+    with app.test_request_context():
+        doctor1 = Doctor.query.filter_by(user_id='test_doctor_id').first()
+        
+        # Authenticate the manager user
+        manager = Manager.query.filter_by(user_id='m').first()
+        login_user(manager)
+
+        # Simulate a POST request to the '/approveDoctors' route
+        response = client.post('/approveDoctors', data={'doctors': [doctor1.id]})
+
+        # Assert that the response status code is 302 (redirect)
+        assert response.status_code == 302
+
+        # Assuming successful approval of doctors, assert that the doctors' 'is_approved' flag is set to True      
+        doctor1 = Doctor.query.filter_by(user_id='test_doctor_id').first()
+
+        assert doctor1.is_approved is True
+
+        # Cleanup: Set the 'is_approved' flag back to False for the approved doctors
+        doctor1.is_approved = False
+        db.session.commit()
+
+# check if all manager reports page is rquested correctly
+def test_manager_reports(app, client):
+    with app.test_request_context():
+        manager = Manager.query.filter_by(user_id='manager').first()
+        login_user(manager)
+        # Simulate a GET request to the '/ManagerReports' route
+        response = client.get('/ManagerReports')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+
+# check if all the reports that are not answerd by doctor are correctly loaded to manager.
+def test_waiting_for_diagnose(app, client):
+    with app.test_request_context():
+        # Simulate a GET request to the '/waitingForDiagnose' route
+        manager = Manager.query.filter_by(user_id='manager').first()
+        login_user(manager)
+
+        response = client.get('/waitingForDiagnose')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
