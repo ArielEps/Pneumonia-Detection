@@ -3,6 +3,11 @@ from PneumoniaApp.Authentication.routes import bcrypt
 from PneumoniaApp.Authentication.validate import *
 from flask_login import login_user
 from flask import url_for
+import os
+import csv
+from flask import Flask
+from flask_login import LoginManager
+from flask.testing import FlaskClient
 ############################################################################################# pages tests ############################################################################################
 def test_home(client):
     response = client.get("/")
@@ -168,3 +173,74 @@ def test_waiting_for_diagnose(app, client):
 
         # Assert that the response status code is 200 (success)
         assert response.status_code == 200
+
+################################################################################## Test Reports ############################################################################
+# Test Docotrs Diagnose reports
+def test_download_appointment_reports(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the manager user
+        manager = Manager.query.filter_by(user_id='manager').first()
+        login_user(manager)
+
+        # Simulate a GET request to the '/downloadAppointmentReports' route
+        response = client.get('/downloadAppointmentReports')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+        # Assert that the response has the correct content type for a CSV file
+        assert response.content_type == 'text/csv' or response.content_type == 'application/vnd.ms-excel'
+
+        # Assert that the response contains the expected attachment filename
+        assert 'attachment' in response.headers['Content-Disposition']
+        assert response.headers['Content-Disposition'].endswith('AppointmentsReport.csv')
+
+        # Assert that the response content is not empty
+        assert response.data
+
+
+# Test users Login data Manager Report
+def test_download_login_reports(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the manager user
+        manager = Manager.query.filter_by(user_id='manager').first()
+        login_user(manager)
+
+        # Simulate a GET request to the '/downloadLoginReports' route
+        response = client.get('/downloadLoginReports')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+        # Assert that the response has the correct content type for a CSV file
+        assert response.content_type == 'text/csv' or response.content_type == 'application/vnd.ms-excel'
+
+        # Assert that the response contains the expected attachment filename
+        assert 'attachment' in response.headers['Content-Disposition']
+        assert response.headers['Content-Disposition'].endswith('UserActivityReport.csv')
+
+        # Assert that the response content is not empty
+        assert response.data
+
+# Test users appointment Manager Report
+def test_download_appointment_reports(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the manager user
+        manager = Manager.query.filter_by(user_id='manager').first()
+        login_user(manager)
+
+        # Simulate a GET request to the '/downloadAppointmentReports' route
+        response = client.get('/downloadAppointmentReports')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+        # Assert that the response has the correct content type for a CSV file
+        assert response.content_type == 'text/csv' or response.content_type == 'application/vnd.ms-excel'
+
+        # Assert that the response contains the expected attachment filename
+        assert 'attachment' in response.headers['Content-Disposition']
+        assert response.headers['Content-Disposition'].endswith('AppointmentsReport.csv')
+
+        # Assert that the response content is not empty
+        assert response.data
