@@ -1,8 +1,11 @@
 from PneumoniaApp.Authentication.models import *
+from PneumoniaApp.Patient.models import *
 from PneumoniaApp.Authentication.routes import bcrypt
 from PneumoniaApp.Authentication.validate import *
 from flask_login import login_user
+from werkzeug.datastructures import FileStorage
 from flask import url_for
+from datetime import datetime
 import os
 import csv
 from flask import Flask
@@ -244,3 +247,81 @@ def test_download_appointment_reports(app: Flask, client: FlaskClient):
 
         # Assert that the response content is not empty
         assert response.data
+
+################################################################################## Patient tests #########################################################################################################
+
+# Test Patient creating diagnose function
+def test_patient_diagnose(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the patient user
+        patient = Patient.query.filter_by(user_id='123456789').first()
+        login_user(patient)
+
+        # Simulate a GET request to the '/PatientDiagnose' route
+        response = client.get('/PatientDiagnose')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+        # Delete test report
+        report = Report.query.order_by(Report.id.desc()).first()
+        db.session.delete(report)
+        db.session.commit()
+
+# Test patient make appointment function
+def test_patient_schedule(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the patient user
+        patient = Patient.query.filter_by(user_id='123456789').first()
+        login_user(patient)
+
+        # Simulate a GET request to the '/PatientScedule' route
+        response = client.get('/PatientScedule')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+        # Simulate a POST request to the '/PatientScedule' route
+        date_str = '2023-07-05'
+        time_str = '10:00'
+        doctor_id = 1
+
+        response = client.post('/PatientScedule', data={'date': date_str, 'time': time_str, 'doctor': doctor_id})
+
+        # Assert that the response status code is 200 (success) or 302 (redirect)
+        assert response.status_code in [200, 302]
+
+        # Assert that the appointment is created in the database
+        appointment = Appointment.query.filter_by(date=datetime.strptime(date_str, '%Y-%m-%d').date(), time=datetime.strptime(time_str, '%H:%M').time(), patient_id=patient.id, doctor_id=doctor_id).first()
+        assert appointment is not None
+
+        # Delete the test appointment
+        db.session.delete(appointment)
+        db.session.commit()
+
+# Test web page - Patient diagnose history
+def test_diagnose_history(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the patient user
+        patient = Patient.query.filter_by(user_id='123456789').first()
+        login_user(patient)
+
+        # Simulate a GET request to the '/DiagnoseHistory' route
+        response = client.get('/DiagnoseHistory')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+# Test web page patient reports that not yet answerd
+def test_diagnose_report(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the patient user
+        patient = Patient.query.filter_by(user_id='123456789').first()
+        login_user(patient)
+
+        # Simulate a GET request to the '/DiagnoseReport' route
+        response = client.get('/DiagnoseReport')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
