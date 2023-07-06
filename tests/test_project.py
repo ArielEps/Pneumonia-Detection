@@ -5,12 +5,13 @@ from PneumoniaApp.Authentication.validate import *
 from flask_login import login_user
 from werkzeug.datastructures import FileStorage
 from flask import url_for
-from datetime import datetime
+from datetime import datetime, date
 import os
 import csv
 from flask import Flask
 from flask_login import LoginManager
 from flask.testing import FlaskClient
+from unittest.mock import patch, Mock
 ############################################################################################# pages tests ############################################################################################
 def test_home(client):
     response = client.get("/")
@@ -263,10 +264,11 @@ def test_patient_diagnose(app: Flask, client: FlaskClient):
         # Assert that the response status code is 200 (success)
         assert response.status_code == 200
 
-        # Delete test report
+        # Delete test report if it exists
         report = Report.query.order_by(Report.id.desc()).first()
-        db.session.delete(report)
-        db.session.commit()
+        if report is not None:
+            db.session.delete(report)
+            db.session.commit()
 
 # Test patient make appointment function
 def test_patient_schedule(app: Flask, client: FlaskClient):
@@ -325,3 +327,172 @@ def test_diagnose_report(app: Flask, client: FlaskClient):
         # Assert that the response status code is 200 (success)
         assert response.status_code == 200
 
+##################################################################################### Doctor Tests #####################################################################################################
+
+# Check doctors appointment web page
+def test_doctors_appointments(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the doctor user
+        doctor = Doctor.query.filter_by(user_id='987654321').first()
+        login_user(doctor)
+
+        # Simulate a GET request to the '/DoctorsAppointments' route
+        response = client.get('/DoctorsAppointments')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+        # Assert that the appointments are retrieved correctly
+        current_date = date.today()
+        appointments = Appointment.query.filter(Appointment.doctor_id == '987654321', Appointment.date >= current_date).all()
+
+        # Assert that the rendered appointments match the expected appointments
+        rendered_data = response.get_data(as_text=True)
+        assert all(str(appointment.id) in rendered_data for appointment in appointments)
+
+# Test Doctor search patient history 
+def test_search_patient_history(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the doctor user
+        doctor = Doctor.query.filter_by(user_id='987654321').first()
+        login_user(doctor)
+
+        # Simulate a GET request to the '/SearchPatientHistory' route
+        response = client.get('/SearchPatientHistory')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+        # Simulate a POST request to the '/SearchPatientHistory' route
+        response = client.post('/SearchPatientHistory', data={'search': '123456789'})
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+        # Assert that the expected template is rendered based on the patient's existence
+        if Patient.query.filter_by(user_id='123456789').first() is not None:
+            assert b"Not such Patient" not in response.data
+        else:
+            assert b"Not such Patient" in response.data
+
+# Test doctor answer web page(rquest help from doctors or answer)
+def test_doctor_answer(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the doctor user
+        doctor = Doctor.query.filter_by(user_id='987654321').first()
+        login_user(doctor)
+
+        # Simulate a GET request to the '/DoctorAnswer' route
+        response = client.get('/DoctorAnswer')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+# Test doctor answer page
+def test_answer_diagnose(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the doctor user
+        doctor = Doctor.query.filter_by(user_id='987654321').first()
+        login_user(doctor)
+
+        # Simulate a GET request to the '/AnswerDiagnose' route
+        response = client.get('/AnswerDiagnose')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+# Test AI request Help answer function
+def test_doctor_ai_help(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the doctor user
+        doctor = Doctor.query.filter_by(user_id='987654321').first()
+        login_user(doctor)
+
+        # Create a test report
+        report = Report(image='test_image.jpeg', patient_id=1, doctor_id=doctor.id)
+        db.session.add(report)
+        db.session.commit()
+
+        # Simulate a GET request to the '/Doctor_AI_HELP/<report_id>' route
+        response = client.get(f'/Doctor_AI_HELP/{report.id}')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+        # Delete the test report
+        db.session.delete(report)
+        db.session.commit()
+
+# Test Doctor answer after his Diagnose
+def test_doctor_answer_details(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the doctor user
+        doctor = Doctor.query.filter_by(user_id='987654321').first()
+        login_user(doctor)
+
+        # Create a test report
+        report = Report(image='test_image.jpeg', patient_id=1, doctor_id=doctor.id)
+        db.session.add(report)
+        db.session.commit()
+
+        # Simulate a GET request to the '/Doctor_answer-details/<report_id>' route
+        response = client.get(f'/Doctor_answer-details/{report.id}')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+
+        # Simulate a POST request to the '/Doctor_answer-details/<report_id>' route
+        response = client.post(f'/Doctor_answer-details/{report.id}', data={'select': 'Yes'})
+
+        # Assert that the user is redirected to the doctor's home page
+        assert response.headers['Location'] == url_for('Authentication.doctorHome')
+
+        # Assert that the report is marked as answered
+        updated_report = Report.query.get(report.id)
+        assert updated_report.is_answer is True
+
+        # Assert that the report's is_sick property is updated correctly
+        assert updated_report.is_sick is True
+
+        # Assert that the report's end_date is updated correctly
+        current_date = date.today()
+        assert updated_report.end_date == current_date
+
+        # Delete the test report
+        db.session.delete(report)
+        db.session.commit()
+
+
+# Test doctor help Diagnose Answer
+def test_doctor_help_details(app: Flask, client: FlaskClient):
+    with app.test_request_context():
+        # Authenticate the doctor user
+        doctor = Doctor.query.filter_by(user_id='987654321').first()
+        login_user(doctor)
+
+        # Create a test report
+        report = Report(image='test_image.jpeg', patient_id=1, doctor_id=doctor.id, helping_doctor_id=doctor.id, is_answer=False, helping_doctor_answer=None)
+        db.session.add(report)
+        db.session.commit()
+
+        # Simulate a GET request to the '/Doctor_help-details/<report_id>' route
+        response = client.get(f'/Doctor_help-details/{report.id}')
+
+        # Assert that the response status code is 200 (success)
+        assert response.status_code == 200
+
+
+        # Simulate a POST request to the '/Doctor_help-details/<report_id>' route
+        response = client.post(f'/Doctor_help-details/{report.id}', data={'select': 'Yes'})
+
+        # Assert that the user is redirected to the doctor's home page
+        assert response.headers['Location'] == url_for('Authentication.doctorHome')
+
+        # Assert that the report's helping_doctor_answer is updated
+        updated_report = Report.query.get(report.id)
+        assert updated_report.helping_doctor_answer is True
+
+        # Delete the test report
+        db.session.delete(report)
+        db.session.commit()
